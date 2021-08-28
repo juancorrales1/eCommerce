@@ -23,13 +23,59 @@
         <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
       </div>
     </nav>
-    <div class="container p-5">
-      <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-        <h4 class="alert-heading">¡A trabajar! :)</h4>
-        <p>Esta sección corresponde a: Entrega 1 (Fecha de entrega: 22/08/2021) y Entrega 2 (Fecha de entrega: 05/09/2021).</p>
-        <hr>
-        <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+
+    <!--
+
+      Onclick - Asigna el evento pertinente en este caso el click a la etiqueta en paricular, al dispararse el evento se ejecutara el codigo que
+      contenga el atributo, en este caso se llamaran funciones contenidas en el .js
+
+    -->
+
+    <div class="container">
+      <div class="row">
+          <div class="col text-right">
+              <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
+                  <label onclick="changeOrderFilter_az()" class="btn btn-light active" id="sortAsc_product" >
+                      <input id="checkAZ_product"  type="radio" name="options" autocomplete="off" checked>A-Z
+                  </label>
+                  <label onclick="changeOrderFilter_za()" class="btn btn-light" id="sortDesc_product" >
+                      <input type="radio" name="options" autocomplete="off">Z-A
+                  </label>
+                  <label onclick="changeOrderFilter_count()" class="btn btn-light" id="sortByCount_product" >
+                      <input type="radio" name="options" autocomplete="off"><i class="fas fa-sort-amount-down mr-1"></i>Cant.
+                  </label>
+              </div>
+          </div>
       </div>
+      <div class="row justify-content-end">
+        <div class="col-md-6"></div>
+          <div class="col-md-6 col-sm-12 mb-1 container">
+            <div class="row container p-0 m-0">
+              <div class="col">
+                <p class="font-weight-normal text-right my-2">Precio</p>
+              </div>
+              <div class="col">
+                <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin_product">
+              </div>
+              <div class="col">
+                <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax_product">
+              </div>
+              <div class="col-3 p-0">
+                <div class="btn-group" role="group">
+                  <button onclick="procesar_datos()" class="btn btn-light btn-block" id="rangeFilterCount_product">Filtrar</button>
+                  <button onclick="limpiarProducto()" class="btn btn-link btn-sm" id="clearRangeFilter_product">Limpiar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="list-group" id="cat-list-container_product">
+          </div>
+      </div>
+  </div>
+
+    <div id="currentDiv">
     </div>
     <footer class="text-muted bg-light">
       <div class="container">
