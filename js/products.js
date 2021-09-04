@@ -42,26 +42,24 @@ function procesar_datos() {
     showProductsList(currentArray);
 }
 
-//Cambian el sistema de ordenamiento actual y disparan el evento de ejecutar el filtro y imprimir nuevamente la lista.
-function changeOrderFilter_az() {
+//Cambian el sistema de ordenamiento actual y ejecuta el filtro, luego imprime nuevamente la lista. Se llaman desde HTML.
+function changeOrderFilterAZ() {
     currentSortCriteria = ORDER_ASC_BY_NAME;
     procesar_datos(currentArray);
 }
 
-function changeOrderFilter_za() {
+function changeOrderFilterZA() {
     currentSortCriteria = ORDER_DESC_BY_NAME;
     procesar_datos(currentArray);
 }
 
-function changeOrderFilter_count() {
+function changeOrderFilterCount() {
     currentSortCriteria = ORDER_BY_PROD_COUNT;
     procesar_datos(currentArray);
 }
 
-//Coloca las variables a como vienen por default y genera la lista nuevamente.
+//Coloca las variables a como vienen por default y genera la lista nuevamente. Se llama desde HTML.
 function limpiarProducto() {
-    currentSortCriteria = ORDER_ASC_BY_NAME;
-    //CAMBIAR INPUT RADIO
     document.getElementById('rangeFilterCountMin_product').value = "";
     document.getElementById('rangeFilterCountMax_product').value = "";
     procesar_datos(currentArray);
@@ -71,8 +69,8 @@ function sortProduct(criteria, array) {
     let result = [];
 
     //Realizamos una serie de if para comprobar que filtro se debe aplicar.
-    //En el caso de el sort por strings comprueba caracter por caracter.
-    // Y en el caso de integer los paresea para no comprobar el ascii del numero. 
+    //En el primer y segundo caso comprueba sin necesidad de usar funciones adicionales ya que son caracteres.
+    //En el tercer caso se usa parseInt para que no haya errores, ya que el tipo de dato que se pasa por parámetro es un número. 
     if (criteria === ORDER_ASC_BY_NAME)
     {
         result = array.sort(function(a, b) {

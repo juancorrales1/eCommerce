@@ -10,20 +10,7 @@ function formValidate(event) {
   var user = document.getElementById('loginUser').value;
   var pass = document.getElementById('loginPassword').value;
   
-  if(pass.length == 0 && user.length == 0){
-    alert("Asegúrate de que has ingresado un usuario y contraseña.");
-    return
-}
-  
-  if(user.length == 0) {
-    alert("Debes ingresar un usuario válido.");
-    return;
-  }
-  
-  if (pass.length == 0) {
-    alert("Debes ingresar una contraseña válida.");
-    return;
-  }
+  localStorage.setItem('usuario', user);
 
   this.submit();
 }
