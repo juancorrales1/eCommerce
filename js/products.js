@@ -1,9 +1,9 @@
 let currentArray = [];
 
-const ORDER_ASC_BY_NAME = "AZ";
-const ORDER_DESC_BY_NAME = "ZA";
+const ORDER_ASC_BY_COST = "Asc";
+const ORDER_DESC_BY_COST = "Desc";
 const ORDER_BY_PROD_COUNT = "Cant.";
-var currentSortCriteria = ORDER_ASC_BY_NAME;
+var currentSortCriteria = ORDER_ASC_BY_COST;
 var minCount = undefined;
 var maxCount = undefined;
 
@@ -43,13 +43,13 @@ function procesar_datos() {
 }
 
 //Cambian el sistema de ordenamiento actual y ejecuta el filtro, luego imprime nuevamente la lista. Se llaman desde HTML.
-function changeOrderFilterAZ() {
-    currentSortCriteria = ORDER_ASC_BY_NAME;
+function changeOrderFilterAscCost() {
+    currentSortCriteria = ORDER_ASC_BY_COST;
     procesar_datos(currentArray);
 }
 
-function changeOrderFilterZA() {
-    currentSortCriteria = ORDER_DESC_BY_NAME;
+function changeOrderFilterDescCost() {
+    currentSortCriteria = ORDER_DESC_BY_COST;
     procesar_datos(currentArray);
 }
 
@@ -71,17 +71,17 @@ function sortProduct(criteria, array) {
     //Realizamos una serie de if para comprobar que filtro se debe aplicar.
     //En el primer y segundo caso comprueba sin necesidad de usar funciones adicionales ya que son caracteres.
     //En el tercer caso se usa parseInt para que no haya errores, ya que el tipo de dato que se pasa por parámetro es un número. 
-    if (criteria === ORDER_ASC_BY_NAME)
+    if (criteria === ORDER_ASC_BY_COST)
     {
         result = array.sort(function(a, b) {
-            if ( a.name < b.name ){ return -1; }
-            if ( a.name > b.name ){ return 1; }
+            if ( a.cost < b.cost ){ return -1; }
+            if ( a.cost > b.cost ){ return 1; }
             return 0;
         });
-    }else if (criteria === ORDER_DESC_BY_NAME){
+    }else if (criteria === ORDER_DESC_BY_COST){
         result = array.sort(function(a, b) {
-            if ( a.name > b.name ){ return -1; }
-            if ( a.name < b.name ){ return 1; }
+            if ( a.cost > b.cost ){ return -1; }
+            if ( a.cost < b.cost ){ return 1; }
             return 0;
         });
     }else if (criteria === ORDER_BY_PROD_COUNT){
@@ -103,25 +103,25 @@ function sortProduct(criteria, array) {
 function showProductsList(array){
     let htmlContentToAppend = "";
     for(let i = 0; i < array.length; i++){
-        let category = array[i];
+        let product = array[i];
 
         //En caso de no cumplir con los filtros no se agrega a la variable.
-        if (((minCount == undefined) || (minCount != undefined && parseInt(category.cost) >= minCount)) &&
-            ((maxCount == undefined) || (maxCount != undefined && parseInt(category.cost) <= maxCount))){
+        if (((minCount == undefined) || (minCount != undefined && parseInt(product.cost) >= minCount)) &&
+            ((maxCount == undefined) || (maxCount != undefined && parseInt(product.cost) <= maxCount))){
 
             htmlContentToAppend += `
-            <a href="category-info.html" class="list-group-item list-group-item-action">
+            <a href="product-info.html" class="list-group-item list-group-item-action">
                 <div class="row">
                     <div class="col-3">
-                        <img src="` + category.imgSrc + `" alt="` + category.description + `" class="img-thumbnail">
+                        <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
                     </div>
                     <div class="col">
                         <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">`+ category.name +`</h4>
-                            <small class="text-muted">` + category.soldCount + ` artículos</small>
+                            <h4 class="mb-1">`+ product.name +`</h4>
+                            <small class="text-muted">` + product.soldCount + ` artículos</small>
                         </div>
-                        <p class="mb-1">` + category.description + `</p>
-                        <p class="mb-1">` + category.currency + " " + category.cost + `</p>
+                        <p class="mb-1">` + product.description + `</p>
+                        <p class="mb-1">` + product.currency + " " + product.cost + `</p>
                     </div>
                 </div>
             </a>
