@@ -4,12 +4,16 @@ var commentaryAndRating = [];
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function (e) {
-    getJSONData(PRODUCT_INFO_URL).then(function(resultObj){
-        if (resultObj.status === "ok"){
+document.addEventListener("DOMContentLoaded", function(e) {
+    getJSONData(PRODUCT_INFO_URL).then(function(resultObj) {
+        if (resultObj.status === "ok") {
             productData = resultObj.data;
             let productImages = productData.images;
-            
+
+            let productRelated = productData.relatedProducts;
+            console.log(productRelated);
+
+
             let productNameHTML = document.getElementById("productName");
             let productDescriptionHTML = document.getElementById("productDescription");
             let productCostAndCurrencyHTML = document.getElementById("productCostAndCurrency");
@@ -22,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
             let imagesToHTML = "";
             for (let i = 0; i < productImages.length; i++) {
-                if(i === 0){
+                if (i === 0) {
                     imagesToHTML += `
                         <div class="carousel-item active">
                             <img src="` + productImages[i] + `" class="d-float w-100">
@@ -35,20 +39,50 @@ document.addEventListener("DOMContentLoaded", function (e) {
                         </div>
                         `
                 }
-                
+
             }
             document.getElementById("currentCarousel").innerHTML = imagesToHTML;
-        }
+
+            getJSONData(PRODUCTS_URL).then(function(test) {
+                if (test.status === "ok") {
+                    let products = test.data;
+                    let relatedProductsToHTML = "";
+
+                    for (i of productRelated) {
+                        relatedProductsToHTML += `
+                        <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="` + products[i].imgSrc + `" class="card-img" alt="` + products[i].name + `">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">` + products[i].name + `</h5>
+                                    <p class="card-text">` + products[i].description + `</p>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        `
+                    }
+
+                    document.getElementById("relatedProductsDiv").innerHTML = relatedProductsToHTML;
+                }
+            });
+        };
     });
 
-    getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObj){
-        if (resultObj.status === "ok"){
-            commentaryAndRating = resultObj.data;
+});
 
-            let htmlContentToAppend = "";
-            for(let i = 0; i < commentaryAndRating.length; i++){
-                let comment = commentaryAndRating[i];        
-                    htmlContentToAppend += `
+
+getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObj) {
+    if (resultObj.status === "ok") {
+        commentaryAndRating = resultObj.data;
+
+        let htmlContentToAppend = "";
+        for (let i = 0; i < commentaryAndRating.length; i++) {
+            let comment = commentaryAndRating[i];
+            htmlContentToAppend += `
                         <div class="list-group-item">
                             <div class="row">
                                 <div class="col-3">
@@ -56,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                                 </div>
                                 <div class="col">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h4 class="mb-1">`+ comment.user +`</h4>
+                                        <h4 class="mb-1">` + comment.user + `</h4>
                                         <small class="text-muted">Puntaje: ` + puntajeEstrellas(comment.score) + `</small>
                                         <small class="text-muted">` + comment.dateTime + `</small>
                                     </div>
@@ -65,11 +99,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
                             </div>
                         </div>
                         `
-            }
-            
-        document.getElementById("commentsDiv").innerHTML = htmlContentToAppend;
         }
-    });
+
+        document.getElementById("commentsDiv").innerHTML = htmlContentToAppend;
+    }
 });
 
 
@@ -78,17 +111,17 @@ function puntajeEstrellas(puntaje) {
     let starContentToAppend = "";
 
     for (let i = 0; i < puntaje; i++) {
-        starContentToAppend +=`
+        starContentToAppend += `
         <span class="fa fa-star checked"></span>
         `
     }
 
-    if(puntaje < 5){
+    if (puntaje < 5) {
         for (let i = puntaje; i < 5; i++) {
-            starContentToAppend+=`
+            starContentToAppend += `
             <span class="fa fa-star"></span>
             `
-            
+
         }
     }
 
@@ -113,8 +146,8 @@ function commentValidate(event) {
             </div>
             <div class="col">
                 <div class="d-flex w-100 justify-content-between">
-                    <h4 class="mb-1">`+ currentUser +`</h4>
-                    <small class="text-muted">Puntaje: `+ puntajeEstrellas(puntajeValue) +`</small>
+                    <h4 class="mb-1">` + currentUser + `</h4>
+                    <small class="text-muted">Puntaje: ` + puntajeEstrellas(puntajeValue) + `</small>
                     <small class="text-muted">` + fechaYHora + `</small>
                 </div>
                 <p class="mb-1">` + inputValue + `</p>
@@ -123,4 +156,4 @@ function commentValidate(event) {
     </div>
     `
     document.getElementById("commentsDiv").innerHTML += commentaryToAppend;
-  }
+}
