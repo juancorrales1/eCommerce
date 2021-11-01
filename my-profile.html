@@ -55,25 +55,51 @@
             </div>
         </div>
     </nav>
-    <div class="container p-5">
-        <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-            <h4 class="alert-heading">¡A trabajar! :)</h4>
-            <p>Esta sección corresponde a: Entrega 6 (Fecha de entrega: 31/10/2021).</p>
+    <div class="container">
+        <div class="row justify-content-center mt-3">
+            <div class="p-4">
+                <h1>Perfil de usuario</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <dl>
+                <dt class="col-sm-3">Nombre:</dt>
+                <dd id="nameContainer" class="col-sm-9"><small>Este campo todavía está vacío.</small></dd>
+
+                <dt class="col-sm-3">Apellido:</dt>
+                <dd id="surnameContainer" class="col-sm-9"><small>Este campo todavía está vacío.</small></dd>
+
+                <dt class="col-sm-3">Email:</dt>
+                <dd id="emailContainer" class="col-sm-9"><small>Este campo todavía está vacío.</small></dd>
+
+                <dt class="col-sm-3">Número telefónico</dt>
+                <dd id="numberContainer" class="col-sm-9"><small>Este campo todavía está vacío.</small></dd>
+            </dl>
             <hr>
-            <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+            <form id="profileForm">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Nombre</label>
+                        <input type="text" class="form-control" id="nameInput" placeholder="Nombre (ej.: Juan)" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Apellido</label>
+                        <input type="text" class="form-control" id="surnameInput" placeholder="Apellido (ej.: Corrales)" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Email</label>
+                    <input type="email" class="form-control" id="emailInput" placeholder="ejemplo@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2">Teléfono de contacto</label>
+                    <input type="number" class="form-control" id="numberInput" placeholder="Teléfono" required>
+                </div>
+                <button type="submit" class="btn btn-primary" aria-describedby="modificationDate">Guardar datos</button>
+                <small id="modificationDate" class="form-text text-muted"></small>
+            </form>
         </div>
-    </div>
-    <footer class="text-muted bg-light">
-        <div class="container">
-            <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
-            <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
-        </div>
-    </footer>
-    <div class="alert fade alert-success" role="alert" id="alertResult">
-        <span id="resultSpan"></span>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+        <br>
     </div>
     <div id="spinner-wrapper">
         <div class="lds-ring">

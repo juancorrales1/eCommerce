@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
             let cartArticles = cart.articles;
             let tbody = document.getElementById("tbody");
             let totalSpan = document.getElementById("total");
-            total = 0;
+            let total = 0;
 
             function subtotalCalc(param1, param2) {
                 return param1 * param2;
